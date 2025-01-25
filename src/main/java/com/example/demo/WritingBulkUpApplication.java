@@ -9,5 +9,4 @@ public class WritingBulkUpApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WritingBulkUpApplication.class, args);
 	}
-
 }
