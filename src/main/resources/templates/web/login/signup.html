@@ -1,0 +1,23 @@
+<!-- src/main/resources/templates/signup.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sign Up</title>
+</head>
+<body>
+    <form th:action="@{/signup}" method="post">
+        <div>
+            <label>Username: <input type="text" name="username" required/></label>
+        </div>
+        <div>
+            <label>Password: <input type="password" name="password" required/></label>
+        </div>
+        <div>
+            <input type="submit" value="Sign Up"/>
+        </div>
+    </form>
+    <div>
+        <a th:href="@{/login}">Already have an account? Login</a>
+    </div>
+</body>
+</html>

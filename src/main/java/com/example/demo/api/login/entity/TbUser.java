@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Member {
+public class TbUser {
 
-    public Member(String username, String encodedPassword, String role) {
+    public TbUser(String username, String encodedPassword, String role) {
         this.username = username;
         this.user_pw = encodedPassword;
         this.role = role;
@@ -23,9 +23,13 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
     
-    @Column(unique = true)
+    @Column(name="userId", unique = true)
     private String username;
+
+    @Column(name="user_pw")
     private String user_pw;
+
+
     private String role;
 
 }

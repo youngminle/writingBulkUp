@@ -6,24 +6,24 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.api.login.entity.Member;
-import com.example.demo.api.login.repository.MemberRepository;
+import com.example.demo.api.login.entity.TbUser;
+import com.example.demo.api.login.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
-    private final MemberRepository memberRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberRepository.findByUsername(username)
+        TbUser userEntity = userRepository.findByUsername(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
         return User.builder()
-            .username(member.getUsername())
-            .password(member.getUser_pw())
-            .roles(member.getRole())
+            .username(userEntity.getUsername())
+            .password(userEntity.getUser_pw())
+            .roles(userEntity.getRole())
             .build();
     }
 }
