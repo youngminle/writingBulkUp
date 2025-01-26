@@ -1,33 +1,19 @@
 <!DOCTYPE html>
-<!-- saved from url=(0033)http://localhost:8080/login?error -->
-<html lang="en"><script id="youtube-hd-fjdmkanbdloodhegphphhklnjfngoffa">var ythdlog = () => {};;var ythderror = () => {};</script><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Please sign in</title>
-    <link href="./Please sign in_files/default-ui.css" rel="stylesheet">
-  </head>
-  <body>
-    <div class="content">
-      <form class="login-form" method="post" action="http://localhost:8080/login">
-        <h2>Please sign in2</h2>
-            <div class="alert alert-danger" role="alert"></div>
-        <p>
-          <label for="username" class="screenreader">Username</label>
-          <input type="text" id="username" name="username" placeholder="Username" required="" autofocus="">
-        </p>
-        <p>
-          <label for="password" class="screenreader">Password</label>
-          <input type="password" id="password" name="password" placeholder="Password" required="">
-        </p>
-
-<input name="_csrf" type="hidden" value="1vcVIJlazuzctOLy_zCo6O2H8rP-sSh2MPqj37xnjEKj0QKC4ZYkFP1tqtrxgIHDyx2c3Y6z39HNiR9bB8uUvNkDuiGV5De1">
-        <button type="submit" class="primary">Sign in</button>
-      </form>
-
-
-
-    </div>
-  
-</body></html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+</head>
+<body>
+    <form th:action="@{/login}" method="post">
+        <div>
+            <label>Username: <input type="text" name="username"/></label>
+        </div>
+        <div>
+            <label>Password: <input type="password" name="password"/></label>
+        </div>
+        <div>
+            <input type="submit" value="Login"/>
+        </div>
+    </form>
+</body>
+</html>
