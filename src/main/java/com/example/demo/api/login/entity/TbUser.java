@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TbUser {
 
-    public TbUser(String username, String encodedPassword, String role, String name, LocalDate birthday, String phoneNumber, String email) {
+    public TbUser(String username, String encodedPassword, String role, String name, LocalDate birthday,
+                  String phoneNumber, String email, String googleAuthToken) {
         this.username = username;
         this.user_pw = encodedPassword;
         this.role = role;
@@ -23,6 +24,7 @@ public class TbUser {
         this.birthday = birthday;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.googleAuthToken = googleAuthToken;
         this.createDate = LocalDateTime.now();
         this.personalInformationExpirationDate = LocalDate.now().plusYears(1);
         this.userExpirationDate = LocalDate.now().plusYears(1);
@@ -34,11 +36,11 @@ public class TbUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idx")
     private Long idx;
-    
-    @Column(name="userId", unique = true)
+
+    @Column(name = "userId", unique = true)
     private String username;
 
-    @Column(name="user_pw")
+    @Column(name = "user_pw")
     private String user_pw;
 
     @Column(name = "role")
@@ -55,6 +57,9 @@ public class TbUser {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "google_auth_token")
+    private String googleAuthToken;
 
     @Column(name = "create_datetime")
     private LocalDateTime createDate;

@@ -25,9 +25,9 @@ public class MemberController {
     public String signup(@RequestParam String username,
                          @RequestParam String password,
                          @RequestParam String name, @RequestParam LocalDate birthday, @RequestParam String phoneNumber,
-                         @RequestParam String email, RedirectAttributes redirectAttributes) {
+                         @RequestParam String email, @RequestParam String googleAuthToken, RedirectAttributes redirectAttributes) {
         try {
-            memberService.signup(username, password, name, birthday, phoneNumber, email);
+            memberService.signup(username, password, name, birthday, phoneNumber, email, googleAuthToken);
             return "redirect:/login?signup=success";
         } catch (IllegalStateException e) {
             redirectAttributes.addFlashAttribute("error", "Username already exist. Please try another.");
