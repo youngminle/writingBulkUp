@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chat Room</title>
+    <!-- WebSocket 클라이언트 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script>
+        let stompClient = null;
+        const username = prompt('Enter your name:');  // 사용자 이름 입력
+
+        function connect() {
+            // WebSocket 연결 설정
+            const socket = new SockJS('/ws');
+            stompClient = Stomp.over(socket);
+            
+            stompClient.connect({}, function(frame) {
+                console.log('Connected: ' + frame);
+                
+                // 공개 채팅방 구독
+                stompClient.subscribe('/topic/public', function(message) {
+                    showMessage(JSON.parse(message.body));
+                });
+
+                // 사용자 참여 메시지 전송
+                stompClient.send("/app/chat.addUser",
+                    {},
+                    JSON.stringify({sender: username, type: 'JOIN'})
+                );
+            });
+        }
+
+        // 메시지 전송 함수
+        function sendMessage() {
+            const messageContent = document.getElementById('message').value.trim();
+            if(messageContent && stompClient) {
+                const chatMessage = {
+                    sender: username,
+                    content: messageContent,
+                    type: 'CHAT'
+                };
+                stompClient.send("/app/chat.send", {}, JSON.stringify(chatMessage));
+                document.getElementById('message').value = '';
+            }
+        }
+
+        // 메시지 표시 함수
+        function showMessage(message) {
+            const messageArea = document.getElementById('messageArea');
+            const messageElement = document.createElement('div');
+            
+            if(message.type === 'JOIN') {
+                messageElement.textContent = message.sender + ' joined!';
+            } else if(message.type === 'CHAT') {
+                messageElement.textContent = message.sender + ': ' + message.content;
+            }
+            
+            messageArea.appendChild(messageElement);
+            messageArea.scrollTop = messageArea.scrollHeight;
+        }
+
+        // 페이지 로드 시 WebSocket 연결
+        window.onload = connect;
+    </script>
+</head>
+<body>
+    <!-- 메시지 표시 영역 -->
+    <div id="messageArea" style="height: 400px; overflow-y: scroll; border: 1px solid #ccc;"></div>
+    <!-- 메시지 입력 영역 -->
+    <div style="margin-top: 10px;">
+        <input type="text" id="message" placeholder="Type a message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</body>
+</html>
